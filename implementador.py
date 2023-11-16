@@ -1,16 +1,16 @@
 
-__version__ = "0.0.0"
+__version__ = "0.1.0"
 
-import configparser
 import os
 
 import appdirs
 
+import projeto
+
 dir_config = appdirs.user_config_dir(appname="implementador")
 os.makedirs(dir_config, exist_ok=True)
 
-arquivo_config = os.path.join(dir_config, "config.ini")
+arquivo_config = os.path.join(dir_config, "config")
 
-
-config = configparser.ConfigParser()
-config.read(arquivo_config)
+projeto = projeto.Projeto(projeto.supremo, arquivo_config)
+projeto.roda()
