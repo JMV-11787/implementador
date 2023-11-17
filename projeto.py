@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 import os
 import shlex
@@ -16,8 +16,8 @@ class Projeto:
 		inst.instruções: list[str] = superprojeto.instruções
 		inst.aplica: bool = superprojeto.aplica
 
-		pares, nome = config.lê(caminho_arquivo)
-		inst.nome = nome
+		pares = config.lê(caminho_arquivo)
+		inst.nome = pares.get("nome", None)
 		inst.repositório = pares.get("repositório", inst.repositório)
 		inst.instruções = pares.get("instruções", inst.instruções)
 		inst.aplica = pares.get("aplica", inst.aplica)

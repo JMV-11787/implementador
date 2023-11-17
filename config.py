@@ -1,12 +1,23 @@
 
-__version__ = "0.0.0"
+__version__ = "0.1.0"
 
 import os
 
+type ChaveValor = str, str | list[str]
 
-def lê(caminho: str) -> tuple[dict, str]:
+
+def lê(caminho: str) -> dict[ChaveValor]:
 	with open(caminho, "r") as arquivo:
 		pares = {}
+
+		nome_arquivo = os.path.basename(arquivo.name)
+		índice_último_ponto = nome_arquivo.rfind(".")
+		nome_arquivo = nome_arquivo[:índice_último_ponto]
+
+		nome_diretório = os.path.dirname(arquivo.name)
+		nome_diretório = os.path.basename(nome_diretório)
+		pares["nome"] = nome_diretório
+
 		for linha in arquivo:
 			linha = linha.split('#')[0]
 			linha = linha.strip()
@@ -16,14 +27,7 @@ def lê(caminho: str) -> tuple[dict, str]:
 			chave, valor = linha.split("=")
 			chave, valor = chave.strip(), valor.strip()
 			pares[chave] = valor
-
-		nome_arquivo = os.path.basename(arquivo.name)
-		índice_último_ponto = nome_arquivo.rfind(".")
-		nome_arquivo = nome_arquivo[:índice_último_ponto]
-
-		nome_diretório = os.path.dirname(arquivo.name)
-		nome_diretório = os.path.basename(nome_diretório)
-	return pares, nome_diretório
+	return pares
 
 
 def procura_em(diretório: str) -> str | None:
