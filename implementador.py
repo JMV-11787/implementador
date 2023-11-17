@@ -1,5 +1,5 @@
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 import os
 
@@ -12,5 +12,5 @@ os.makedirs(dir_config, exist_ok=True)
 
 arquivo_config = os.path.join(dir_config, "config")
 
-projeto = projeto.Projeto(projeto.supremo, arquivo_config)
-projeto.roda()
+implementador = projeto.Projeto(projeto.supremo, arquivo_config)
+implementador.roda()
