@@ -1,5 +1,5 @@
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 import os
 
@@ -28,6 +28,16 @@ def lê(caminho: str) -> dict[ChaveValor]:
 			chave, valor = chave.strip(), valor.strip()
 			pares[chave] = valor
 	return pares
+
+
+def converte_lista(valor: str, tira_vazios=True) -> list[str]:
+	valores = valor.split(";")
+	for i in range(len(valores)):
+		valores[i] = valores[i].strip()
+	if tira_vazios:
+		while "" in valores:
+			valores.remove("")
+	return valores
 
 
 def procura_em(diretório: str) -> str | None:
