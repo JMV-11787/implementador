@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-__version__ = "0.2.1"
+__version__ = "0.3.0"
 
 import os
 import shlex
@@ -19,7 +19,11 @@ class Projeto:
 		pares = config.lê(caminho_arquivo)
 		inst.nome = pares.get("nome", None)
 		inst.repositório = pares.get("repositório", inst.repositório)
-		inst.instruções = pares.get("instruções", inst.instruções)
+
+		instruções = pares.get("instruções")
+		if instruções:
+			instruções = config.converte_lista(instruções)
+			inst.instruções = instruções
 		inst.aplica = pares.get("aplica", inst.aplica)
 
 		caminho_diretório = os.path.dirname(caminho_arquivo)
