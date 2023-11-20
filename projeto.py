@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 
 import os
 import shlex
@@ -44,8 +44,12 @@ class Projeto:
 			inst.continua()
 
 	def continua(inst):
-		inst.tarefas[inst.próxima_tarefa]()
-		inst.próxima_tarefa += 1
+		if len(inst.tarefas) - 1 > inst.próxima_tarefa:
+			inst.atarefa()
+			inst.próxima_tarefa: int = 0
+			if len(inst.tarefas) >= 1:
+				inst.tarefas[inst.próxima_tarefa]()
+				inst.próxima_tarefa += 1
 
 	def atarefa(inst):
 		inst.tarefas: list[Callable] = []
@@ -55,9 +59,6 @@ class Projeto:
 
 		for subprojeto in inst.subprojetos:
 			inst.tarefas.append(subprojeto.continua)
-
-		inst.tarefas.append(inst.atarefa)
-		inst.próxima_tarefa: int = 0
 
 	class Aplicação:
 		def __init__(inst, etapas: list[str], começa=True):
@@ -127,7 +128,7 @@ class Projeto:
 				inst.roda()
 
 
-supremo = Projeto.__new__(Projeto.__class__)
+supremo = object.__new__(Projeto)
 supremo.nome = "supremo"
 supremo.repositório = None
 supremo.instruções = None

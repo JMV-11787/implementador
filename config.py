@@ -1,9 +1,9 @@
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 import os
 
-type ChaveValor = str, str | list[str]
+type ChaveValor = (str, str | list[str])
 
 
 def lê(caminho: str) -> dict[ChaveValor]:
