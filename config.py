@@ -1,5 +1,5 @@
 
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 
 import os
 
@@ -7,7 +7,7 @@ type ChaveValor = (str, str | list[str])
 
 
 def lê(caminho: str) -> dict[ChaveValor]:
-	with open(caminho, "r") as arquivo:
+	with open(caminho, "r", encoding="UTF-8") as arquivo:
 		pares = {}
 
 		nome_arquivo = os.path.basename(arquivo.name)

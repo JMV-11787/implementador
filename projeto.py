@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-__version__ = "0.3.1"
+__version__ = "0.4.0"
 
 import os
 import shlex
@@ -32,7 +32,7 @@ class Projeto:
 		]
 
 		inst.aplicação: inst.Aplicação | None = None
-		if inst.repositório and inst.aplica:
+		if inst.aplica:
 			inst.aplicação = inst.Aplicação(inst.instruções, começa=roda)
 
 		inst.tarefas: list[Callable] = []
@@ -44,12 +44,12 @@ class Projeto:
 			inst.continua()
 
 	def continua(inst):
-		if len(inst.tarefas) - 1 > inst.próxima_tarefa:
+		if len(inst.tarefas) - 1 < inst.próxima_tarefa:
 			inst.atarefa()
 			inst.próxima_tarefa: int = 0
-			if len(inst.tarefas) >= 1:
-				inst.tarefas[inst.próxima_tarefa]()
-				inst.próxima_tarefa += 1
+			return
+		inst.tarefas[inst.próxima_tarefa]()
+		inst.próxima_tarefa += 1
 
 	def atarefa(inst):
 		inst.tarefas: list[Callable] = []
