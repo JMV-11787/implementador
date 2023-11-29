@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 
 import os
 import shlex
@@ -75,7 +75,20 @@ class Projeto:
 			return False
 
 		def etapa_atual(inst):
+			if inst.vai_estourar():
+				raise Exception(
+					f"Estouro da lista de tarefas da aplicação\n"
+					f"Comprimento da lista: {len(inst.etapas)}\n"
+					f"Última etapa da lista: {len(inst.etapas) - 1}\n"
+					f"Etapa que tentou ser realiza: {inst.índice_etapa_atual}"
+				)
 			return inst.etapas[inst.índice_etapa_atual]
+
+		def vai_estourar(inst) -> bool:
+			compr_lista = len(inst.etapas)
+			etapa_atual = inst.índice_etapa_atual
+			última_etapa = compr_lista - 1
+			return etapa_atual > última_etapa
 
 		def continua(inst):
 			if inst.acabou():
@@ -112,7 +125,7 @@ class Projeto:
 
 			def roda(inst):
 				if not inst.já_começou():
-					inst.subprocesso = subprocess.Popen(inst.comando)
+					inst.subprocesso: subprocess.Popen = subprocess.Popen(inst.comando)
 				else:
 					raise Exception("A aplicação já está rodando ou já rodou")
 
