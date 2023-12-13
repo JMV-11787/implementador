@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-__version__ = "0.4.1"
+__version__ = "0.4.2"
 
 import os
 import shlex
@@ -80,7 +80,7 @@ class Projeto:
 					f"Estouro da lista de tarefas da aplicação\n"
 					f"Comprimento da lista: {len(inst.etapas)}\n"
 					f"Última etapa da lista: {len(inst.etapas) - 1}\n"
-					f"Etapa que tentou ser realiza: {inst.índice_etapa_atual}"
+					f"Etapa que tentou ser realizada: {inst.índice_etapa_atual}"
 				)
 			return inst.etapas[inst.índice_etapa_atual]
 
@@ -127,7 +127,7 @@ class Projeto:
 				if not inst.já_começou():
 					inst.subprocesso: subprocess.Popen = subprocess.Popen(inst.comando)
 				else:
-					raise Exception("A aplicação já está rodando ou já rodou")
+					raise Exception("A etapa já está rodando ou já rodou")
 
 			def fecha(inst):
 				if inst.já_começou():
