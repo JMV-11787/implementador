@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-__version__ = "0.4.3"
+__version__ = "0.4.4"
 
 import os
 import shlex
@@ -115,16 +115,6 @@ class Projeto:
 					return True
 				return False
 
-			def está_rodando(inst):
-				"""Verdadeiro se a Etapa já está rodando
-
-				Não confundir com a função já_começou
-				"""
-				if inst.subprocesso:
-					if inst.subprocesso.poll() is None:
-						return True
-				return False
-
 			def já_terminou(inst):
 				if inst.subprocesso:
 					if inst.subprocesso.poll() is not None:
@@ -139,17 +129,6 @@ class Projeto:
 						f"A etapa já está rodando ou já rodou\n"
 						f"Comando: {inst.comando}"
 					)
-
-			def fecha(inst):
-				if inst.já_começou():
-					inst.subprocesso.terminate()
-				else:
-					raise Exception("A etapa não está rodando")
-
-			def recomeça(inst):
-				inst.fecha()
-				inst.subprocesso = None
-				inst.roda()
 
 
 supremo = object.__new__(Projeto)
