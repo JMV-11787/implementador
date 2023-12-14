@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-__version__ = "0.4.2"
+__version__ = "0.4.3"
 
 import os
 import shlex
@@ -95,7 +95,7 @@ class Projeto:
 				return
 			if inst.etapa_atual().já_terminou():
 				inst.índice_etapa_atual += 1
-			elif inst.etapa_atual().está_rodando():
+			elif inst.etapa_atual().já_começou():
 				return
 			inst.etapa_atual().roda()
 
@@ -107,11 +107,19 @@ class Projeto:
 					inst.roda()
 
 			def já_começou(inst):
+				"""Verdadeiro se o processo de inicialização Etapa já começou
+
+				Não significa que o subprocesso já está rodando
+				"""
 				if inst.subprocesso:
 					return True
 				return False
 
 			def está_rodando(inst):
+				"""Verdadeiro se a Etapa já está rodando
+
+				Não confundir com a função já_começou
+				"""
 				if inst.subprocesso:
 					if inst.subprocesso.poll() is None:
 						return True
@@ -127,7 +135,10 @@ class Projeto:
 				if not inst.já_começou():
 					inst.subprocesso: subprocess.Popen = subprocess.Popen(inst.comando)
 				else:
-					raise Exception("A etapa já está rodando ou já rodou")
+					raise Exception(
+						f"A etapa já está rodando ou já rodou\n"
+						f"Comando: {inst.comando}"
+					)
 
 			def fecha(inst):
 				if inst.já_começou():
